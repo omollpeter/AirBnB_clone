@@ -1,0 +1,12 @@
+trial.py
+test.py
+__pycache__/
+.vscode/
+tests/__pycache__/
+test/test_models/__pycache__/
+models/__pycache__/
+my_file_0.txt
+my_first_file.txt
+file_append.txt
+add_commit_push
+change_perm
