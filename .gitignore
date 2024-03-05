@@ -10,3 +10,4 @@ my_first_file.txt
 file_append.txt
 add_commit_push
 change_perm
+models/engine/__pycache__/

@@ -98,7 +98,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(type(dict_["name"]), str)
         self.assertTrue(type(dict_["contact"]), int)
 
-
     def test_base_model_save(self):
         self.base1.save()
         self.assertEqual(
