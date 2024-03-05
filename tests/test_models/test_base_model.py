@@ -6,6 +6,7 @@ from datetime import datetime
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
         self.base1 = BaseModel()
+        self.base1.name = "BaseModel1"
 
     def test_base_model_instance_id(self):
         self.assertTrue(type(self.base1.id), str)
@@ -30,6 +31,11 @@ class TestBaseModel(unittest.TestCase):
 
     def test_base_model_to_dict(self):
         self.assertTrue(type(self.base1.to_dict()), dict)
+        self.assertEqual(self.base1.to_dict()["name"], "BaseModel1")
+        dict_ = self.base1.to_dict()
+        self.assertEqual(len(dict_["created_at"]), 26)
+        self.assertEqual(len(dict_["updated_at"]), 26)
+
 
     def test_base_model_save(self):
         self.base1.save()
