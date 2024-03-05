@@ -7,6 +7,7 @@ class TestBaseModel(unittest.TestCase):
     def setUp(self):
         self.base1 = BaseModel()
         self.base1.name = "BaseModel1"
+        self.base1.contact = 40101
 
     def test_base_model_instance_id(self):
         self.assertTrue(type(self.base1.id), str)
@@ -35,6 +36,10 @@ class TestBaseModel(unittest.TestCase):
         dict_ = self.base1.to_dict()
         self.assertEqual(len(dict_["created_at"]), 26)
         self.assertEqual(len(dict_["updated_at"]), 26)
+        self.assertTrue(type(dict_["created_at"]), str)
+        self.assertTrue(type(dict_["updated_at"]), str)
+        self.assertTrue(type(dict_["name"]), str)
+        self.assertTrue(type(dict_["contact"]), int)
 
 
     def test_base_model_save(self):
