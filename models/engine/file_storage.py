@@ -8,6 +8,8 @@ This module contains the following class definitions:
 
 import json
 from pathlib import Path
+import re
+from datetime import datetime
 
 
 class FileStorage:
@@ -37,15 +39,46 @@ class FileStorage:
         Args:
             obj (BaseModel instance): Instance of BaseModel
         """
-        key = obj["__class__"] + "." + obj["id"]
-        self.__objects[key] = obj
+        obj_id = obj.id
+        obj_cls = obj.__class__.__name__
+        key = obj_cls + "." + obj_id
+        # print("String object:", obj.to_dict())
+        self.__objects[key] = obj.__str__()
 
     def save(self):
         """
         Serializes __objects to the JSON file
         """
         with open(self.__file_path, "w", encoding="utf-8") as file:
-            json.dump(self.__objects, file)
+            dict_ = {}
+            # print("All objects:", self.__objects)
+            for key, value in self.__objects.items():
+                new_value = value.split("{")[1][:-1].replace("'", "\"")
+                obj_cls = value.split("]")[0].strip("[")
+
+                inner_dict = {}
+                all_items = new_value.split(", \"")
+                for value in all_items:
+                    pair = value.split(": ")
+                    key_ = pair[0].strip('"')
+                    val_ = pair[1].strip('"')
+                    if key_ == "created_at" or key_ == "updated_at":
+                        val_ = val_.split("(")[1].strip(")")
+                        val_ = val_.split(", ")
+                        val_ = datetime(
+                            int(val_[0]),
+                            int(val_[1]),
+                            int(val_[2]),
+                            int(val_[3]),
+                            int(val_[4]),
+                            int(val_[5]),
+                            int(val_[6])
+                        )
+                        val_ = val_.isoformat()
+                    inner_dict[key_] = val_
+                inner_dict["__class__"] = obj_cls
+                dict_[key] = inner_dict
+            json.dump(dict_, file)
 
     def reload(self):
         """
@@ -55,4 +88,22 @@ class FileStorage:
         path = Path(self.__file_path)
         if path.exists():
             with open(path, "r", encoding="utf-8") as obj_file:
-                self.__objects = json.load(obj_file)
+                dict_ = json.load(obj_file)
+                obj_dicts = {}
+                for key, value in dict_.items():
+                    inner_dict = {}
+                    for key_, val_ in value.items():
+                        if key_ == "created_at" or key_ == "updated_at":
+                            val_ = datetime.strptime(
+                                val_, "%Y-%m-%dT%H:%M:%S.%f"
+                            )
+                        if key_ == "__class__":
+                            continue
+                        inner_dict[key_] = val_
+                    obj_desc = "[{}] ({}) {}".format(
+                        dict_[key]["__class__"],
+                        inner_dict["id"],
+                        inner_dict
+                    )
+                    obj_dicts[key] = obj_desc
+                self.__objects = obj_dicts

@@ -24,7 +24,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertGreater(nb_chars, 0)
 
     def test_file_storage_new(self):
-        storage.new(self.base1.to_dict())
+        storage.new(self.base1)
 
         nb_chars = 0
         with open("file.json", "r", encoding="utf-8") as file:
