@@ -9,11 +9,14 @@ It contains the following class definitions:
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import re
 import json
 from datetime import datetime
 
+
+classes = ["BaseModel", "User"]
 
 def parse_line_with_args_double_quotes(match, line):
     """
@@ -29,6 +32,7 @@ def parse_line_with_args_double_quotes(match, line):
         idx = args.index(match[i])
         args[idx] = args[idx].replace("_", " ").strip('"')
     return args
+
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -75,13 +79,17 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
         else:
-            if args[0] == BaseModel.__name__:
-                new_model = BaseModel()
-                print(new_model.id)
-                storage.save()
+            if args[0] in classes:
+                if args[0] == BaseModel.__name__:
+                    new_model = BaseModel()
+                    print(new_model.id)
+                    storage.save()
+                elif args[0] == User.__name__:
+                    new_user = BaseModel()
+                    print(new_user.id)
+                    storage.save()
             else:
                 print("** class doesn't exist **")
-
 
     def help_create(self):
         print("Creates a new instance of BaseModel, saves it "
@@ -103,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             if len(args) >= 2:
-                if args[0] == BaseModel.__name__:
+                if args[0] in classes:
                     key = args[0] + "." + args[1]
                     all_instances = storage.all()
                     if key in all_instances.keys():
@@ -134,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             if len(args) >= 2:
-                if args[0] == BaseModel.__name__:
+                if args[0] in classes:
                     key = args[0] + "." + args[1]
                     all_instances = storage.all()
                     if key in all_instances.keys():
@@ -163,10 +171,25 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
 
-        if not args or args[0] == BaseModel.__name__:
+        if not args:
             objects = storage.all()
             objects_list = [objects[key] for key in objects.keys()]
             print(objects_list)
+        elif args[0] in classes:
+            if args[0] == "BaseModel":
+                objects = storage.all()
+                objects_list = []
+                for key in objects.keys():
+                    if key.startswith("BaseModel"):
+                        objects_list.append(objects[key])
+                print(objects_list)
+            if args[0] == "User":
+                objects = storage.all()
+                objects_list = []
+                for key in objects.keys():
+                    if key.startswith("User"):
+                        objects_list.append(objects[key])
+                print(objects_list)
         else:
             print("** class doesn't exist **")
 
@@ -190,7 +213,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             if len(args) >= 4:
-                if args[0] == BaseModel.__name__:
+                if args[0] in classes:
                     key = args[0] + "." + args[1]
                     all_instances = storage.all()
                     if key in all_instances.keys():
@@ -204,7 +227,7 @@ class HBNBCommand(cmd.Cmd):
                         content = {}
                         with open(path, "r", encoding="utf-8") as file:
                             content = json.load(file)
-                        
+
                         for key_, value in content.items():
                             if key_ == key:
                                 update = datetime.now().isoformat()
