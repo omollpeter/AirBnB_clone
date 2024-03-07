@@ -10,7 +10,25 @@ It contains the following class definitions:
 import cmd
 from models.base_model import BaseModel
 from models import storage
+import re
+import json
+from datetime import datetime
 
+
+def parse_line_with_args_double_quotes(match, line):
+    """
+    Parses a args that contains string args in double
+    quotes
+    """
+    for i in range(len(match)):
+        previous = match[i]
+        match[i] = match[i].replace(" ", "_")
+        line = line.replace(previous, match[i])
+    args = line.split()
+    for i in range(len(match)):
+        idx = args.index(match[i])
+        args[idx] = args[idx].replace("_", " ").strip('"')
+    return args
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -48,13 +66,18 @@ class HBNBCommand(cmd.Cmd):
         """
         Creates a new instance of BaseModel
         """
-        arguments = cmd.Cmd.parseline(self, line)
-        if arguments[0] is None:
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+        if not args:
             print("** class name missing **")
         else:
-            if arguments[0] == BaseModel.__name__:
+            if args[0] == BaseModel.__name__:
                 new_model = BaseModel()
-                setattr(new_model, "email", "omoll@email.com")
+                print(new_model.id)
                 storage.save()
             else:
                 print("** class doesn't exist **")
@@ -69,7 +92,28 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints the string representation of an instance
         """
-        print(f"{line}")
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+
+        if not args:
+            print("** class name missing **")
+        else:
+            if len(args) >= 2:
+                if args[0] == BaseModel.__name__:
+                    key = args[0] + "." + args[1]
+                    all_instances = storage.all()
+                    if key in all_instances.keys():
+                        print(all_instances[key])
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
+            elif len(args) == 1:
+                print("** instance id missing **")
 
     def help_show(self):
         print(" Prints the string representation of an "
@@ -80,7 +124,27 @@ class HBNBCommand(cmd.Cmd):
         """
         Deletes an instance
         """
-        pass
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+        if not args:
+            print("** class name missing **")
+        else:
+            if len(args) >= 2:
+                if args[0] == BaseModel.__name__:
+                    key = args[0] + "." + args[1]
+                    all_instances = storage.all()
+                    if key in all_instances.keys():
+                        del all_instances[key]
+                        storage.update_objects(all_instances)
+                        storage.save()
+                    else:
+                        print("** no instance found **")
+            elif len(args) == 1:
+                print("** instance id missing **")
 
     def help_destroy(self):
         print("Deletes an instance based on the class name and id "
@@ -92,8 +156,19 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on class name
         """
-        args = cmd.Cmd.parseline(self, line)
-        print(args[:-1])
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+
+        if not args or args[0] == BaseModel.__name__:
+            objects = storage.all()
+            objects_list = [objects[key] for key in objects.keys()]
+            print(objects_list)
+        else:
+            print("** class doesn't exist **")
 
     def help_all(self):
         print("Prints a list of all string representation of all "
@@ -104,7 +179,50 @@ class HBNBCommand(cmd.Cmd):
         """
         Updates an instance based on the class name and id
         """
-        pass
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+
+        if not args:
+            print("** class name missing **")
+        else:
+            if len(args) >= 4:
+                if args[0] == BaseModel.__name__:
+                    key = args[0] + "." + args[1]
+                    all_instances = storage.all()
+                    if key in all_instances.keys():
+                        pattern1 = r'^-?\d+$'
+                        pattern2 = r'^-?\d+(\.\d+)?([eE][+-]?\d+)?$'
+                        if re.match(pattern1, args[3]):
+                            args[3] = int(args[3])
+                        elif re.match(pattern2, args[3]):
+                            args[3] = float(args[3])
+                        path = storage.get_path()
+                        content = {}
+                        with open(path, "r", encoding="utf-8") as file:
+                            content = json.load(file)
+                        
+                        for key_, value in content.items():
+                            if key_ == key:
+                                update = datetime.now().isoformat()
+                                value["updated_at"] = update
+                                value[args[2]] = args[3]
+
+                        with open(path, "w", encoding="utf-8") as file:
+                            json.dump(content, file)
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
+            elif len(args) == 3:
+                print("** value missing **")
+            elif len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 1:
+                print("** instance id missing **")
 
     def help_update(self):
         print("Updates an instance based on the class name "

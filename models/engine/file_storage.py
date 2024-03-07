@@ -42,7 +42,6 @@ class FileStorage:
         obj_id = obj.id
         obj_cls = obj.__class__.__name__
         key = obj_cls + "." + obj_id
-        # print("String object:", obj.to_dict())
         self.__objects[key] = obj.__str__()
 
     def save(self):
@@ -51,7 +50,6 @@ class FileStorage:
         """
         with open(self.__file_path, "w", encoding="utf-8") as file:
             dict_ = {}
-            # print("All objects:", self.__objects)
             for key, value in self.__objects.items():
                 new_value = value.split("{")[1][:-1].replace("'", "\"")
                 obj_cls = value.split("]")[0].strip("[")
@@ -107,3 +105,16 @@ class FileStorage:
                     )
                     obj_dicts[key] = obj_desc
                 self.__objects = obj_dicts
+
+    def update_objects(self, dict_):
+        """
+        Updates __objects with new instances
+        """
+
+        self.__objects = dict_
+
+    def get_path(self):
+        """
+        Retrieves file storage path
+        """
+        return self.__file_path
