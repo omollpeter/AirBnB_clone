@@ -10,13 +10,18 @@ It contains the following class definitions:
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
+from models.state import State
 from models import storage
 import re
 import json
 from datetime import datetime
 
 
-classes = ["BaseModel", "User"]
+classes = ["BaseModel", "User", "City", "Place", "Amenity", "State", "Review"]
 
 def parse_line_with_args_double_quotes(match, line):
     """
@@ -85,8 +90,28 @@ class HBNBCommand(cmd.Cmd):
                     print(new_model.id)
                     storage.save()
                 elif args[0] == User.__name__:
-                    new_user = BaseModel()
+                    new_user = User()
                     print(new_user.id)
+                    storage.save()
+                elif args[0] == City.__name__:
+                    new_city = City()
+                    print(new_city.id)
+                    storage.save()
+                elif args[0] == Place.__name__:
+                    new_place = Place()
+                    print(new_place.id)
+                    storage.save()
+                elif args[0] == State.__name__:
+                    new_state = State()
+                    print(new_state.id)
+                    storage.save()
+                elif args[0] == Amenity.__name__:
+                    new_amenity = Amenity()
+                    print(new_amenity.id)
+                    storage.save()
+                elif args[0] == Review.__name__:
+                    new_review = Review()
+                    print(new_review.id)
                     storage.save()
             else:
                 print("** class doesn't exist **")
@@ -176,20 +201,12 @@ class HBNBCommand(cmd.Cmd):
             objects_list = [objects[key] for key in objects.keys()]
             print(objects_list)
         elif args[0] in classes:
-            if args[0] == "BaseModel":
-                objects = storage.all()
-                objects_list = []
-                for key in objects.keys():
-                    if key.startswith("BaseModel"):
-                        objects_list.append(objects[key])
-                print(objects_list)
-            if args[0] == "User":
-                objects = storage.all()
-                objects_list = []
-                for key in objects.keys():
-                    if key.startswith("User"):
-                        objects_list.append(objects[key])
-                print(objects_list)
+            objects = storage.all()
+            objects_list = []
+            for key in objects.keys():
+                if key.startswith(args[0]):
+                    objects_list.append(objects[key])
+            print(objects_list)
         else:
             print("** class doesn't exist **")
 
