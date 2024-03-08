@@ -1,75 +1,78 @@
 import unittest
-from models.base_model import BaseModel
+from models.city import City
+from models.state import State
 from datetime import datetime
 
 
-class TestBaseModel(unittest.TestCase):
+class TestCity(unittest.TestCase):
     def setUp(self):
-        self.base1 = BaseModel()
-        self.base1.name = "BaseModel1"
-        self.base1.contact = 40101
-        dict1 = self.base1.to_dict()
-        self.base2 = BaseModel(**dict1)
+        self.city1 = City()
+        self.city1.name = "City1"
+        self.city1.contact = 40101
+        dict1 = self.city1.to_dict()
+        self.city2 = City(**dict1)
         dict2 = {}
-        self.base3 = BaseModel(**dict2)
-        self.base3.name = "BaseModel3"
-        self.base3.contact = 40102
+        self.city3 = City(**dict2)
+        self.city3.name = "City3"
+        self.city3.contact = 40102
+        self.state1 = State()
+        self.state2 = State()
 
-    def test_base_model_instance_id(self):
-        self.assertTrue(type(self.base1.id), str)
-        self.assertEqual(len(self.base1.id), 36)
+    def test_city_instance_id(self):
+        self.assertTrue(type(self.city1.id), str)
+        self.assertEqual(len(self.city1.id), 36)
 
-        self.assertTrue(type(self.base2.id), str)
-        self.assertEqual(len(self.base2.id), 36)
+        self.assertTrue(type(self.city2.id), str)
+        self.assertEqual(len(self.city2.id), 36)
 
-        self.assertTrue(type(self.base3.id), str)
-        self.assertEqual(len(self.base3.id), 36)
+        self.assertTrue(type(self.city3.id), str)
+        self.assertEqual(len(self.city3.id), 36)
 
     def tearDown(self):
         pass
 
-    def test_base_model_created_at(self):
+    def test_city_created_at(self):
         self.assertEqual(
-            len(self.base1.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city1.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base1.created_at), datetime)
+        self.assertTrue(type(self.city1.created_at), datetime)
 
         self.assertEqual(
-            len(self.base1.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city1.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base1.created_at), datetime)
+        self.assertTrue(type(self.city1.created_at), datetime)
 
         self.assertEqual(
-            len(self.base2.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city2.created_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base2.created_at), datetime)
+        self.assertTrue(type(self.city2.created_at), datetime)
 
-    def test_base_model_updated_at(self):
+    def test_city_updated_at(self):
         self.assertEqual(
-            len(self.base1.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city1.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base1.updated_at), datetime)
-
-        self.assertEqual(
-            len(self.base2.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
-            26
-        )
-        self.assertTrue(type(self.base2.updated_at), datetime)
+        self.assertTrue(type(self.city1.updated_at), datetime)
 
         self.assertEqual(
-            len(self.base3.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city2.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base3.updated_at), datetime)
+        self.assertTrue(type(self.city2.updated_at), datetime)
 
-    def test_base_model_to_dict(self):
-        self.assertTrue(type(self.base1.to_dict()), dict)
-        self.assertEqual(self.base1.to_dict()["name"], "BaseModel1")
-        dict_ = self.base1.to_dict()
+        self.assertEqual(
+            len(self.city3.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            26
+        )
+        self.assertTrue(type(self.city3.updated_at), datetime)
+
+    def test_city_to_dict(self):
+        self.assertTrue(type(self.city1.to_dict()), dict)
+        self.assertEqual(self.city1.to_dict()["name"], "City1")
+        dict_ = self.city1.to_dict()
         self.assertEqual(len(dict_["created_at"]), 26)
         self.assertEqual(len(dict_["updated_at"]), 26)
         self.assertTrue(type(dict_["created_at"]), str)
@@ -77,10 +80,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(type(dict_["name"]), str)
         self.assertTrue(type(dict_["contact"]), int)
 
-        self.base2 = BaseModel(**dict_)
-        self.assertTrue(type(self.base2.to_dict()), dict)
-        self.assertEqual(self.base2.to_dict()["name"], "BaseModel1")
-        dict_ = self.base2.to_dict()
+        self.city2 = City(**dict_)
+        self.assertTrue(type(self.city2.to_dict()), dict)
+        self.assertEqual(self.city2.to_dict()["name"], "City1")
+        dict_ = self.city2.to_dict()
         self.assertEqual(len(dict_["created_at"]), 26)
         self.assertEqual(len(dict_["updated_at"]), 26)
         self.assertTrue(type(dict_["created_at"]), str)
@@ -88,9 +91,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(type(dict_["name"]), str)
         self.assertTrue(type(dict_["contact"]), int)
 
-        self.assertTrue(type(self.base3.to_dict()), dict)
-        self.assertEqual(self.base3.to_dict()["name"], "BaseModel3")
-        dict_ = self.base3.to_dict()
+        self.assertTrue(type(self.city3.to_dict()), dict)
+        self.assertEqual(self.city3.to_dict()["name"], "City3")
+        dict_ = self.city3.to_dict()
         self.assertEqual(len(dict_["created_at"]), 26)
         self.assertEqual(len(dict_["updated_at"]), 26)
         self.assertTrue(type(dict_["created_at"]), str)
@@ -98,34 +101,48 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(type(dict_["name"]), str)
         self.assertTrue(type(dict_["contact"]), int)
 
-    def test_base_model_save(self):
-        self.base1.save()
+    def test_city_save(self):
+        self.city1.save()
         self.assertEqual(
-            len(self.base1.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city1.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base1.updated_at), datetime)
+        self.assertTrue(type(self.city1.updated_at), datetime)
 
-        self.base2.save()
+        self.city2.save()
         self.assertEqual(
-            len(self.base2.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city2.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base2.updated_at), datetime)
+        self.assertTrue(type(self.city2.updated_at), datetime)
 
-        self.base3.save()
+        self.city3.save()
         self.assertEqual(
-            len(self.base3.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
+            len(self.city3.updated_at.strftime("%Y-%m-%d %H:%M:%S.%f")),
             26
         )
-        self.assertTrue(type(self.base3.updated_at), datetime)
+        self.assertTrue(type(self.city3.updated_at), datetime)
 
-    def test_base_model_args(self):
-        self.assertRaises(TypeError, BaseModel, {})
-        self.assertRaises(TypeError, BaseModel, 1, 2)
-        self.assertRaises(TypeError, BaseModel, "123", {}, 4)
-        self.assertRaises(TypeError, BaseModel, None)
-        self.assertRaises(TypeError, BaseModel, [])
-        self.assertRaises(TypeError, BaseModel, 3.14159)
-        self.assertRaises(TypeError, BaseModel, {1, 2, 3})
-        self.assertRaises(TypeError, BaseModel, (1, 2, 3))
+    def test_city_args(self):
+        self.assertRaises(TypeError, City, {})
+        self.assertRaises(TypeError, City, 1, 2)
+        self.assertRaises(TypeError, City, "123", {}, 4)
+        self.assertRaises(TypeError, City, None)
+        self.assertRaises(TypeError, City, [])
+        self.assertRaises(TypeError, City, 3.14159)
+        self.assertRaises(TypeError, City, {1, 2, 3})
+        self.assertRaises(TypeError, City, (1, 2, 3))
+
+    def test_city_state_id(self):
+        self.city1.state_id = self.state1.id
+        self.city2.state_id = self.state2.id
+
+        self.assertTrue(self.city1.state_id, self.state1.id)
+        self.assertTrue(self.city2.state_id, self.state2.id)
+
+    def test_city_name(self):
+        self.city1.name = "Sansiro"
+        self.city2.name = "Madrid"
+
+        self.assertEqual(self.city1.name, "Sansiro")
+        self.assertEqual(self.city2.name, "Madrid")
