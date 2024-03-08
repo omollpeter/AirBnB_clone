@@ -51,31 +51,30 @@ class FileStorage:
         with open(self.__file_path, "w", encoding="utf-8") as file:
             dict_ = {}
             for key, value in self.__objects.items():
-                new_value = value.split("{")[1][:-1].replace("'", "\"")
-                obj_cls = value.split("]")[0].strip("[")
-
-                inner_dict = {}
-                all_items = new_value.split(", \"")
-                for value in all_items:
-                    pair = value.split(": ")
-                    key_ = pair[0].strip('"')
-                    val_ = pair[1].strip('"')
-                    if key_ == "created_at" or key_ == "updated_at":
-                        val_ = val_.split("(")[1].strip(")")
-                        val_ = val_.split(", ")
-                        val_ = datetime(
-                            int(val_[0]),
-                            int(val_[1]),
-                            int(val_[2]),
-                            int(val_[3]),
-                            int(val_[4]),
-                            int(val_[5]),
-                            int(val_[6])
-                        )
-                        val_ = val_.isoformat()
-                    inner_dict[key_] = val_
-                inner_dict["__class__"] = obj_cls
-                dict_[key] = inner_dict
+                pattern1 = r'(\[[a-zA-Z]+\])'
+                pattern3 = r'(\{.*\})'
+                pattern4 = r'(datetime.datetime\([0-9, ]*\))'
+                obj_cls = re.search(pattern1, value).group(1).strip("[]")
+                cls_dt = re.search(pattern3, value).group(1).replace("'", '"')
+                dates = re.findall(pattern4, cls_dt)
+                for date in dates:
+                    new_date = date
+                    new_date = new_date.split("(")[1].strip(")")
+                    new_date = new_date.split(", ")
+                    new_date = datetime(
+                        int(new_date[0]),
+                        int(new_date[1]),
+                        int(new_date[2]),
+                        int(new_date[3]),
+                        int(new_date[4]),
+                        int(new_date[5]),
+                        int(new_date[6])
+                    )
+                    new_date = new_date.isoformat()
+                    cls_dt = cls_dt.replace(date, '"' + new_date + '"')
+                cls_dt = json.loads(cls_dt)
+                cls_dt["__class__"] = obj_cls
+                dict_[key] = cls_dt
             json.dump(dict_, file)
 
     def reload(self):

@@ -25,7 +25,7 @@ class Place(BaseModel):
         price_by_night (int): price_by_night in the Place (0)
         latitude (float): latitude of the Place (default is 0.0)
         longitude (float): longitude of the Place (default is 0.0)
-        amenity_id (list): amenity_id in the Place (default is [])
+        amenity_ids (list): amenity_id in the Place (default is [])
     """
 
     city_id = ""
@@ -38,4 +38,4 @@ class Place(BaseModel):
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amenity_id = []
+    amenity_ids = []
