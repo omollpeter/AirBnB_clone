@@ -59,6 +59,7 @@ class BaseModel:
         Updates dynamic attributes in self.__dict__
         """
         self.__dict__[name] = value
+        self.__dict__["updated_at"] = datetime.now()
         storage.new(self)
 
     def __str__(self):

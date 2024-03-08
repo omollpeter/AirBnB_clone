@@ -23,6 +23,7 @@ from datetime import datetime
 
 classes = ["BaseModel", "User", "City", "Place", "Amenity", "State", "Review"]
 
+
 def parse_line_with_args_double_quotes(match, line):
     """
     Parses a args that contains string args in double
@@ -137,6 +138,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             if len(args) >= 2:
                 if args[0] in classes:
+                    storage.reload()
                     key = args[0] + "." + args[1]
                     all_instances = storage.all()
                     if key in all_instances.keys():
@@ -191,6 +193,7 @@ class HBNBCommand(cmd.Cmd):
         """
         pattern = r'(".*?")'
         match = re.findall(pattern, line)
+        storage.reload()
         if match:
             args = parse_line_with_args_double_quotes(match, line)
         else:
@@ -214,6 +217,32 @@ class HBNBCommand(cmd.Cmd):
         print("Prints a list of all string representation of all "
               + "instances based or not on the class name.\n"
               + "Ex: $ all BaseModel or $ all\n")
+
+    def do_count(self, line):
+        """
+        Prints count of instances based on class name
+        """
+        pattern = r'(".*?")'
+        match = re.findall(pattern, line)
+        storage.reload()
+        if match:
+            args = parse_line_with_args_double_quotes(match, line)
+        else:
+            args = line.split()
+
+        if args[0] in classes:
+            objects = storage.all()
+            objects_list = []
+            for key in objects.keys():
+                if key.startswith(args[0]):
+                    objects_list.append(objects[key])
+            print(len(objects_list))
+        else:
+            print("** class doesn't exist **")
+
+    def help_count(self):
+        print("Prints count of instances based on class name\n"
+              + "Ex: $ count BaseModel\n")
 
     def do_update(self, line):
         """
@@ -269,6 +298,58 @@ class HBNBCommand(cmd.Cmd):
               + "and id by adding or updating attribute (save the "
               + "change into the JSON file).\n"
               + "Ex: $ update BaseModel 1234-1234-1234 email 'bnb@mail.com'\n")
+
+    def default(self, line):
+        """
+        Executes command that do not follow the do_* criterion
+        """
+        line = line.strip()
+        args = line.split(".")
+        if len(args) == 1:
+            print("** unknown command **")
+        else:
+            cls_name = args[0]
+
+            pattern1 = r'([a-z]+)'
+            pattern2 = r'(\(.*\))'
+            pattern3 = r'(\{.*\})'
+            command = re.search(pattern1, args[1])
+            if command:
+                command = command.group(1)
+                arguments = re.search(pattern2, args[1])
+                if arguments:
+                    arguments = arguments.group(1).strip("()")
+                    dict_in_args = re.search(pattern3, arguments)
+                    if dict_in_args and command == "update":
+                        dict_in_args = dict_in_args.group(1)
+                        dict_ = dict_in_args.replace("'", '"')
+                        dict_ = json.loads(dict_)
+                        id_ = arguments.split(", ")[0].strip('"')
+                        for key, value in dict_.items():
+                            k_v = key +  " " + str(value)
+                            update_args = cls_name + " " + id_ + " " + k_v
+                            self.do_update(update_args)
+                    else:
+                        arguments = arguments.split(", ")
+                        args_no_quote = [arg.strip('"') for arg in arguments]
+                        str_args = " ".join(arg for arg in args_no_quote)
+                        str_args = cls_name + " " + str_args
+                        if command == "all":
+                            self.do_all(str_args)
+                        elif command == "show":
+                            self.do_show(str_args)
+                        elif command == "update":
+                            self.do_update(str_args)
+                        elif command == "destroy":
+                            self.do_destroy(str_args)
+                        elif command == "count":
+                            self.do_count(str_args)
+                        else:
+                            print("** unknown command **")
+                else:
+                    print("** unknown command **")
+            else:
+                print("** unknown command **")
 
 
 if __name__ == "__main__":
