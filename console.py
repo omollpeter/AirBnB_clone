@@ -326,7 +326,7 @@ class HBNBCommand(cmd.Cmd):
                         dict_ = json.loads(dict_)
                         id_ = arguments.split(", ")[0].strip('"')
                         for key, value in dict_.items():
-                            k_v = key +  " " + str(value)
+                            k_v = key + " " + str(value)
                             update_args = cls_name + " " + id_ + " " + k_v
                             self.do_update(update_args)
                     else:
