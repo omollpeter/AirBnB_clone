@@ -82,6 +82,17 @@ class FileStorage:
                     obj_dicts[key] = obj_desc
                 self.__objects = obj_dicts
 
+    def update_objects(self, dict_):
+        """
+        Updates __objects with new instances
+        """
+
+        self.__objects = dict_
+        keys_in_objects = set(self.__objects.keys())
+        keys_in_objects_dict = set(self.__objects_dict.keys())
+        deleted_key = list(keys_in_objects_dict - keys_in_objects)[0]
+        del self.__objects_dict[deleted_key]
+
     def get_path(self):
         """
         Retrieves file storage path
