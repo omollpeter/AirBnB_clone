@@ -24,6 +24,7 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
+    __objects_dict = {}
 
     def all(self):
         """
@@ -43,39 +44,14 @@ class FileStorage:
         obj_cls = obj.__class__.__name__
         key = obj_cls + "." + obj_id
         self.__objects[key] = obj.__str__()
+        self.__objects_dict[key] = obj.to_dict()
 
     def save(self):
         """
         Serializes __objects to the JSON file
         """
         with open(self.__file_path, "w", encoding="utf-8") as file:
-            dict_ = {}
-            for key, value in self.__objects.items():
-                pattern1 = r'(\[[a-zA-Z]+\])'
-                pattern3 = r'(\{.*\})'
-                pattern4 = r'(datetime.datetime\([0-9, ]*\))'
-                obj_cls = re.search(pattern1, value).group(1).strip("[]")
-                cls_dt = re.search(pattern3, value).group(1).replace("'", '"')
-                dates = re.findall(pattern4, cls_dt)
-                for date in dates:
-                    new_date = date
-                    new_date = new_date.split("(")[1].strip(")")
-                    new_date = new_date.split(", ")
-                    new_date = datetime(
-                        int(new_date[0]),
-                        int(new_date[1]),
-                        int(new_date[2]),
-                        int(new_date[3]),
-                        int(new_date[4]),
-                        int(new_date[5]),
-                        int(new_date[6])
-                    )
-                    new_date = new_date.isoformat()
-                    cls_dt = cls_dt.replace(date, '"' + new_date + '"')
-                cls_dt = json.loads(cls_dt)
-                cls_dt["__class__"] = obj_cls
-                dict_[key] = cls_dt
-            json.dump(dict_, file)
+            json.dump(self.__objects_dict, file)
 
     def reload(self):
         """
@@ -89,6 +65,7 @@ class FileStorage:
                 obj_dicts = {}
                 for key, value in dict_.items():
                     inner_dict = {}
+                    self.__objects_dict[key] = value
                     for key_, val_ in value.items():
                         if key_ == "created_at" or key_ == "updated_at":
                             val_ = datetime.strptime(
@@ -104,13 +81,6 @@ class FileStorage:
                     )
                     obj_dicts[key] = obj_desc
                 self.__objects = obj_dicts
-
-    def update_objects(self, dict_):
-        """
-        Updates __objects with new instances
-        """
-
-        self.__objects = dict_
 
     def get_path(self):
         """
