@@ -151,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
 
     def help_show(self):
-        print(" Prints the string representation of an "
+        print("Prints the string representation of an "
               + "instance based on the class name and id.\n"
               + "Ex: $ show BaseModel 1234-1234-1234\n")
 
@@ -232,15 +232,18 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
 
-        if args[0] in classes:
-            objects = storage.all()
-            objects_list = []
-            for key in objects.keys():
-                if key.startswith(args[0]):
-                    objects_list.append(objects[key])
-            print(len(objects_list))
+        if args:
+            if args[0] in classes:
+                objects = storage.all()
+                objects_list = []
+                for key in objects.keys():
+                    if key.startswith(args[0]):
+                        objects_list.append(objects[key])
+                print(len(objects_list))
+            else:
+                print("** class doesn't exist **")
         else:
-            print("** class doesn't exist **")
+            print("** class name missing **")
 
     def help_count(self):
         print("Prints count of instances based on class name\n"

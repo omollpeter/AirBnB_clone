@@ -167,7 +167,7 @@ class TestPlace(unittest.TestCase):
 
         self.assertEqual(self.place1.description, "Beach")
         self.assertEqual(self.place2.description, "Desert")
-    
+
     def test_place_number_rooms(self):
         self.place1.number_rooms = 10
         self.place2.number_rooms = 15
