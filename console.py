@@ -174,7 +174,6 @@ class HBNBCommand(cmd.Cmd):
                     all_instances = storage.all()
                     if key in all_instances.keys():
                         del all_instances[key]
-                        storage.update_objects(all_instances)
                         storage.save()
                     else:
                         print("** no instance found **")
@@ -203,14 +202,14 @@ class HBNBCommand(cmd.Cmd):
 
         if not args:
             objects = storage.all()
-            objects_list = [objects[key] for key in objects.keys()]
+            objects_list = [str(objects[key]) for key in objects.keys()]
             print(objects_list)
         elif args[0] in classes:
             objects = storage.all()
             objects_list = []
             for key in objects.keys():
                 if key.startswith(args[0]):
-                    objects_list.append(objects[key])
+                    objects_list.append(str(objects[key]))
             print(objects_list)
         else:
             print("** class doesn't exist **")
