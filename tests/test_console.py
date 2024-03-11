@@ -411,6 +411,22 @@ Ex: $ count BaseModel\
 """
         self.assertEqual(result, expected)
 
+    def test_console_quit(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+
+        result = f.getvalue().strip()
+        expected = ""
+        self.assertEqual(result, expected)
+
+    def test_console_quit(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("EOF")
+
+        result = f.getvalue().strip()
+        expected = ""
+        self.assertEqual(result, expected)
+
     def test_console_update(self):
         model1 = BaseModel()
         model_id = model1.id
