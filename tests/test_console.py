@@ -565,13 +565,6 @@ Ex: $ update BaseModel 1234-1234-1234 email 'bnb@mail.com'\
         self.assertEqual(result, expected)
 
     def test_console_BaseModel_all(self):
-        all_keys = list(storage.all().keys())
-        for key in all_keys:
-            class_id = key.split(".")
-            class_ = class_id[0]
-            id_ = class_id[1]
-            HBNBCommand().onecmd("destroy {} {}".format(class_, id_))
-
         new_model = BaseModel()
         storage.save()
         with patch("sys.stdout", new=StringIO()) as f:
