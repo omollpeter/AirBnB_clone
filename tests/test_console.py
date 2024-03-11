@@ -419,7 +419,7 @@ Ex: $ count BaseModel\
         expected = ""
         self.assertEqual(result, expected)
 
-    def test_console_quit(self):
+    def test_console_EOF(self):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("EOF")
 
