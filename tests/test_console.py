@@ -573,7 +573,7 @@ Ex: $ update BaseModel 1234-1234-1234 email 'bnb@mail.com'\
         result = f.getvalue().strip()
         self.assertGreater(len(result), 0)
 
-    def test_console_User_all(self):
+    def test_console_default(self):
         new_user = User()
         storage.save()
         with patch("sys.stdout", new=StringIO()) as f:
