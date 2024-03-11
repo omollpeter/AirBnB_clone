@@ -252,7 +252,6 @@ class HBNBCommand(cmd.Cmd):
         """
         Updates an instance based on the class name and id
         """
-        line = line.replace('\\"', '"')
         pattern = r'(".*?")'
         match = re.findall(pattern, line)
         if match:
