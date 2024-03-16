@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Circular, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #484848;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: Circular;
+    src: url('/fonts/webfontkit-20240315-034616/circularstd-book-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-light-webfont.woff2') format('woff2'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-black-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-black-webfont.woff2') format('woff2'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-medium-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-medium-webfont.woff2') format('woff2'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-light-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-book-webfont.woff2') format('woff2'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-bold-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-bold-webfont.woff2') format('woff2'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-light_italic-webfont.woff') format('woff'),
+        url('/fonts/webfontkit-20240315-034616/circularstd-bookitalic-webfont.woff') format('woff');
+}
+
+.logo {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    width: 100px;
+    background-image: url(/images/logo.png);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+}
