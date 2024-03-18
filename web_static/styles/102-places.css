@@ -156,12 +156,11 @@
 .icon-tv,
 .icon-wifi,
 .icon-pet {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    margin-right: 15px;
-    background-size: contain;
     background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+    padding-left: 30px;
+    line-height: 1.5; 
 }
 
 .icon-tv {
