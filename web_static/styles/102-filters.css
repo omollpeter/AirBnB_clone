@@ -40,7 +40,7 @@
     position: relative;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 600px) {
     .filters {
         position: relative;
         width: 100%;
@@ -49,8 +49,7 @@
 
     .locations,
     .amenities {
-        width: 180px;
-        height: 65px;
+        width: 50%;
     }
 
     .filters button {
