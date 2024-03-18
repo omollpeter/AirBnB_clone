@@ -96,37 +96,31 @@
     width: 100px;
 }
 
+.icon-b,
+.icon-r,
 .icon-g {
-    height: 50px;
-    background-image: url(/images/guests.png);
-    background-size: contain;
-    background-repeat: no-repeat;
+    position: relative;
+    padding-top: 5px;
+    line-height: 1.5;
+    height: 40px;
 }
 
-.icon-r {
-    height: 50px;
-    background-image: url(/images/rooms.png);
-    background-size: contain;
-    background-repeat: no-repeat;
+.icon-g::before {
+    content: url('/images/guests.png');
 }
 
-.icon-b {
-    height: 50px;
-    background-image: url(/images/shower.png);
-    background-size: contain;
-    background-repeat: no-repeat;
+.icon-r::before {
+    content: url(/images/rooms.png);
+}
+
+.icon-b::before {
+    content: url(/images/shower.png);
 }
 
 @media screen and (max-width: 600px) {
     .information {
         margin-top: 50px;
         padding: 0px 15px;
-    }
-
-    .icon-b,
-    .icon-r,
-    .icon-g {
-        height: 40px
     }
 }
 
@@ -156,11 +150,12 @@
 .icon-tv,
 .icon-wifi,
 .icon-pet {
-    background-repeat: no-repeat;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
     background-size: contain;
-    background-position: left center;
-    padding-left: 30px;
-    line-height: 1.5; 
+    background-repeat: no-repeat;
 }
 
 .icon-tv {
@@ -173,10 +168,6 @@
 
 .icon-pet {
     background-image: url(/images/pet.png);
-}
-
-.amenity p {
-    display: inline;
 }
 
 @media screen and (max-width: 600px) {
