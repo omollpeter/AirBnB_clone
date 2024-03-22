@@ -15,102 +15,102 @@
 
     <body>
         <header>
-            <div class="logo"></div>
+            <div class="logo" role="app-logo" aria-hidden="true"></div>
 
         </header>
 
-        <div class="container">
+        <div role="main-content" class="container">
             <section class="filters">
-                <div class="locations">
+                <div role="location-to-search" class="locations">
                     <h3>States</h3>
-                    <h4>Texas, Seattle,...</h4>
-                    <ul class="popover">
-                        <li class="top-li">Texas
+                    <h4 role="example-states">Texas, Seattle,...</h4>
+                    <ul class="popover" role="states">
+                        <li class="top-li" role="state-name">Texas
                             <ul>
-                                <li>Dallas</li>
-                                <li>Houston</li>
+                                <li role="city-name">Dallas</li>
+                                <li role="city-name">Houston</li>
                             </ul>
                         </li>
-                        <li class="top-li">Seattle
+                        <li class="top-li" role="state-name">Seattle
                             <ul>
-                                <li>DC</li>
-                                <li>Cassanova</li>
+                                <li role="city-name">DC</li>
+                                <li role="city-name">Cassanova</li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-                <div class="amenities">
+                <div role="amenities-to-search" class="amenities">
                     <h3>Amenities</h3>
-                    <h4>Steam bath, Fast Internet</h4>
-                    <ul class="popover">
-                        <li>Steam bath</li>
-                        <li>Fast Internet</li>
-                        <li>Spacious Lounge</li>
-                        <li>Master bedroom</li>
+                    <h4 role="example-amenities">Steam bath, Fast Internet</h4>
+                    <ul class="popover" role="list-of-amenities">
+                        <li role="amenity-name">Steam bath</li>
+                        <li role="amenity-name">Fast Internet</li>
+                        <li role="amenity-name">Spacious Lounge</li>
+                        <li role="amenity-name">Master bedroom</li>
                     </ul>
                 </div>
-                <button>Search</button>
+                <button aria-label="Search-button">Search</button>
             </section>
 
             <section class="places">
                 <h1>Places</h1>
 
-                <div class="article-container">
-                    <div class="article">
+                <div class="article-container" role="places-container">
+                    <div class="article" role="a-place">
                         <h2>My Home</h2>
-                        <div class="price_by_night">
+                        <div class="price_by_night" role="price-for-a-night">
                             <p>$80</p>
                         </div>
 
-                        <div class="information">
-                            <div class="max_guest">
-                                <div class="icon-g">
+                        <div class="information" role="place-information">
+                            <div class="max_guest" role="maximum-guests">
+                                <div class="icon-g" aria-hidden="true">
 
                                 </div>
                                 <p>2 Guests</p>
                             </div>
-                            <div class="number_rooms">
-                                <div class="icon-r">
+                            <div class="number_rooms" role="number-of-rooms">
+                                <div class="icon-r" aria-hidden="true">
 
                                 </div>
                                 <p>1 Bedroom</p>
                             </div>
-                            <div class="number_bathrooms">
-                                <div class="icon-b">
+                            <div class="number_bathrooms" role="number-of-bathrooms">
+                                <div class="icon-b" aria-hidden="true">
 
                                 </div>
                                 <p>1 Bathroom</p>
                             </div>
                         </div>
 
-                        <div class="user">
+                        <div class="user" role="owner-of-place">
                             <p><b>Owner</b>: Peter Omollo</p>
                         </div>
 
-                        <div class="description">
+                        <div class="description" role="place-description">
                             <p>This is a one-bedroom house typically consists of a compact layout designed to accommodate the basic needs of a single occupant or a couple. Here's a description of what such a house might entail.
                                 The exterior design of a one-bedroom house can vary greatly depending on architectural style and location. It might feature a modest facade with a single entrance or a more contemporary design with clean lines and minimalist landscaping.</p>
                         </div>
 
-                        <div class="amenity">
+                        <div class="amenity" role="amenities-present">
                             <h2>Amenities</h2>
                             <ul>
                                 <li>
-                                    <div class="icon-tv"></div>
+                                    <div class="icon-tv" aria-hidden="true"></div>
                                     <p>TV</p>
                                 </li>
                                 <li>
-                                    <div class="icon-wifi"></div>
+                                    <div class="icon-wifi" aria-hidden="true"></div>
                                     <P>Wifi</P>
                                 </li>
                                 <li>
-                                    <div class="icon-pet"></div>
+                                    <div class="icon-pet" aria-hidden="true"></div>
                                     <p>Pets friendly</p>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="reviews">
+                        <div class="reviews" role="place-reviews">
                             <h2>2 Reviews</h2>
                             <ul>
                                 <li>
@@ -124,26 +124,26 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="article">
+                    <div class="article" role="a-place">
                         <h2>Tiny house</h2>
-                        <div class="price_by_night">
+                        <div class="price_by_night" role="price-for-a-night">
                             <p>$65</p>
                         </div>
 
-                        <div class="information">
-                            <div class="max_guest">
-                                <div class="icon-g">
+                        <div class="information" role="place-information">
+                            <div class="max_guest" role="maximum-guests">
+                                <div class="icon-g" aria-hidden="true">
 
                                 </div>
                                 <p>4 Guests</p>
                             </div>
-                            <div class="number_rooms">
-                                <div class="icon-r">
+                            <div class="number_rooms" role="number-of-rooms">
+                                <div class="icon-r" aria-hidden="true">
 
                                 </div>
                                 <p>2 Bedroom</p>
                             </div>
-                            <div class="number_bathrooms">
+                            <div class="number_bathrooms" role="number-of-bathrooms">
                                 <div class="icon-b">
 
                                 </div>
@@ -151,26 +151,26 @@
                             </div>
                         </div>
 
-                        <div class="user">
+                        <div class="user" role="owner-of-place">
                             <p><b>Owner</b>: James Abiola</p>
                         </div>
 
-                        <div class="description">
+                        <div class="description" role="place-description">
                             <p>This is a one-bedroom house typically consists of a compact layout designed to accommodate the basic needs of a single occupant or a couple. Here's a description of what such a house might entail.
                                 The exterior design of a one-bedroom house can vary greatly depending on architectural style and location. It might feature a modest facade with a single entrance or a more contemporary design with clean lines and minimalist landscaping.</p>
                         </div>
 
-                        <div class="amenity">
+                        <div class="amenity" role="amenities-present">
                             <h2>Amenities</h2>
                             <ul>
                                 <li>
-                                    <div class="icon-pet"></div>
+                                    <div class="icon-pet" aria-hidden="true"></div>
                                     <p>Pets friendly</p>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="reviews">
+                        <div class="reviews" role="place-reviews">
                             <h2>1 Review</h2>
                             <ul>
                                 <li>
@@ -181,62 +181,62 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="article">
+                    <div class="article" role="a-place">
                         <h2>A suite</h2>
-                        <div class="price_by_night">
+                        <div class="price_by_night" role="price-for-a-night">
                             <p>$190</p>
                         </div>
 
-                        <div class="information">
-                            <div class="max_guest">
-                                <div class="icon-g">
+                        <div class="information" role="place-information">
+                            <div class="max_guest" role="maximum-guests">
+                                <div class="icon-g" aria-hidden="true">
 
                                 </div>
                                 <p>3 Guests</p>
                             </div>
-                            <div class="number_rooms">
-                                <div class="icon-r">
+                            <div class="number_rooms" role="number-of-rooms">
+                                <div class="icon-r" aria-hidden="true">
 
                                 </div>
                                 <p>2 Bedroom</p>
                             </div>
-                            <div class="number_bathrooms">
-                                <div class="icon-b">
+                            <div class="number_bathrooms" role="number-of-bathrooms">
+                                <div class="icon-b" aria-hidden="true">
 
                                 </div>
                                 <p>2 Bathroom</p>
                             </div>
                         </div>
 
-                        <div class="user">
+                        <div class="user" role="owner-of-place">
                             <p><b>Owner</b>: Chapel Dona</p>
                         </div>
 
-                        <div class="description">
+                        <div class="description" role="place-description">
                             <p>This is a one-bedroom house typically consists of a compact layout designed to accommodate the basic needs of a single occupant or a couple. Here's a description of what such a house might entail.
                                 The exterior design of a one-bedroom house can vary greatly depending on architectural style and location. It might feature a modest facade with a single entrance or a more contemporary design with clean lines and minimalist landscaping.</p>
                         </div>
 
-                        <div class="amenity">
+                        <div class="amenity" role="amenities-present">
                             <h2>Amenities</h2>
                             <ul>
                                 <li>
-                                    <div class="icon-tv"></div>
+                                    <div class="icon-tv" aria-hidden="true"></div>
                                     <p>TV</p>
                                 </li>
                                 <li>
-                                    <div class="icon-wifi"></div>
+                                    <div class="icon-wifi" aria-hidden="true"></div>
                                     <P>Wifi</P>
                                 </li>
                                 <li>
-                                    <div class="icon-pet"></div>
+                                    <div class="icon-pet" aria-hidden="true"></div>
                                     <p>Pets friendly</p>
                                 </li>
 
                             </ul>
                         </div>
 
-                        <div class="reviews">
+                        <div class="reviews" role="place-reviews">
                             <h2>2 Reviews</h2>
                             <ul>
                                 <li>
